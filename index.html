@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>昆象云科技跑操音乐播放网站</title>
+    <link rel="icon" href="https://hive.forms.usercontent.microsoft/Images/9188040d-6c67-4c5b-b112-36a304b66dad/00000000-0000-0000-0003-bffd409131bf/T0RRH45M4BJGVXSCOEE2GS5JAZ/fe1565ec-02bf-4b26-800f-b6b659adee28" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .content-box {
+            text-align: center;
+            max-width: 600px;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .instructions {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .play-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .play-btn:hover {
+            background-color: #45a049;
+        }
+
+        .pause-btn {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        .pause-btn:hover {
+            background-color: #e68900;
+        }
+
+        .stop-btn {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .stop-btn:hover {
+            background-color: #da190b;
+        }
+
+        footer {
+            background-color: #0066cc;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .status {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-content">
+        <div class="content-box">
+            <h1>欢迎使用昆象云科技跑操音乐播放网站</h1>
+            <div class="instructions">
+                <p>ℹ️点击"开始播放"后将循环播放跑操音乐，切换后台仍将继续播放，如需暂停可点击"暂停播放"按钮，结束跑操后可直接关闭本网页。</p>
+                <p>🏃快去享受跑步的乐趣吧~</p>
+            </div>
+            <div class="button-group">
+                <button class="play-btn" onclick="startMusic()">开始播放</button>
+                <button class="pause-btn" onclick="pauseMusic()">暂停播放</button>
+                <button class="stop-btn" onclick="stopMusic()">停止播放</button>
+            </div>
+            <div class="status" id="status">已就绪</div>
+        </div>
+    </div>
+
+    <footer>
+        <div>
+            © 2022-<span id="currentYear"></span> 昆明昆象云科技有限责任公司 版权所有
+        </div>
+        <div style="margin-top: 10px;">
+            <a href="https://kunxy.top">昆象云科技官网</a>｜
+            <a href="https://rule-portal.yongmukeji.top">昆象云科技规章制度访问指引</a>｜
+            <a href="https://yongmukeji.top">永慕智创软件工作室官网</a>
+        </div>
+    </footer>
+
+    <audio id="bgMusic" loop>
+        <source src="runmusic.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const currentYear = new Date().getFullYear();
+        document.getElementById('currentYear').textContent = currentYear;
+
+        const music = document.getElementById('bgMusic');
+        const status = document.getElementById('status');
+
+        function startMusic() {
+            music.play().then(() => {
+                status.textContent = '正在播放...';
+            }).catch(e => {
+                status.textContent = '播放失败，请检查音乐文件';
+                console.error(e);
+            });
+        }
+
+        function pauseMusic() {
+            music.pause();
+            status.textContent = '已暂停';
+        }
+
+        function stopMusic() {
+            music.pause();
+            music.currentTime = 0;
+            status.textContent = '已停止';
+        }
+
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden && music.paused && music.currentTime > 0) {
+            }
+        });
+    </script>
+</body>
+</html>
